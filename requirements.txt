@@ -1,0 +1,21 @@
+# Versions used for the paper (NVIDIA GPU, CUDA 12)
+
+# network, training and sampling
+jax[cuda12]==0.4.28
+equinox==0.11.2
+optax==0.1.7
+numpy==2.2.4
+scipy==1.15.2
+h5py==3.13.0
+torch==2.11.0
+pywavelet==0.2.8
+
+# waveforms, noise and gap masks
+cupy-cuda12x==13.4.1
+lisaanalysistools==1.0.13
+fastlisaresponse==1.0.11
+lisaglitch==2.0.0
+
+# toy illustration
+matplotlib==3.10.1
+pillow==11.1.0
