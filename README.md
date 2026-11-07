@@ -130,10 +130,6 @@ samples = flow.to_physical(theta, norm["param_mean"], norm["param_std"])  # log1
 }
 ```
 
-The code for our earlier paper, *Robust and scalable simulation-based inference for gravitational wave signals
-with gaps* ([arXiv:2512.18290](https://arxiv.org/abs/2512.18290)), is at
-[bpandamao/SBI_gaps](https://github.com/bpandamao/SBI_gaps).
-
 ## License
 
 MIT; see [LICENSE](LICENSE).
