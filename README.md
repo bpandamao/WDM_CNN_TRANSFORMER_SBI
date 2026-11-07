@@ -26,10 +26,12 @@ wdmsbi/                    the package
   networks.py              the summarizers and the flow-matching velocity network (JAX / Equinox)
   data.py                  stored waveforms, gap library, train/validation split
   flow.py                  posterior sampling (RK4)
+  calibration.py           credible levels at which the truth enters a posterior
 scripts/
   generate_waveforms.py    prior draws and their clean waveforms
   generate_gap_library.py  gap masks (lisaglitch)
   train.py                 trains a summarizer and the flow together
+  calibrate.py             calibration on new observations
   simulate_observation.py  a gapped, noisy observation to try the network on
   sample_posterior.py      flow-matching posterior of one observation
 toy/                       the illustration above
@@ -82,7 +84,19 @@ for s in token_pooling pooled_cnn; do
 done
 ```
 
-**3. Posterior of an observation.**
+**3. Calibration** on 500 new observations whose waveforms and masks were not used in training. The masks
+come from a second library, generated with the same gap model and another seed. Each network gets the same
+observations and the same Gaussian draws; printed are, for each parameter, for (ln f0, ln fdot0) and for all
+three jointly, the fraction of truths inside the 90% region and the KS p-value of uniform credible levels.
+
+```bash
+python scripts/generate_waveforms.py --n 500 --seed 20261027 --output data/calibration.h5
+python scripts/generate_gap_library.py --seed 20261029 --output data/calibration_gaps.h5
+python scripts/calibrate.py --injections data/calibration.h5 --gaps data/calibration_gaps.h5 \
+    --runs runs/transformer runs/token_pooling runs/pooled_cnn --seed 20261028 --output calibration.npz
+```
+
+**4. Posterior of an observation.**
 
 ```bash
 python scripts/simulate_observation.py --gaps data/gap_library.h5 --seed 7 --output observation.npz
